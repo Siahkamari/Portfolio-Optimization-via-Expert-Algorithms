@@ -5,8 +5,7 @@ from scipy import optimize as op
 def project(y, A):
     n = y.size
     theta = np.linalg.solve(A, np.ones(n))
-
-
+    
     c = np.zeros(4*n)
     A1 = np.concatenate((np.ones([1,n]),np.zeros([1,3*n])), axis = 1)
     A2 = np.concatenate((np.eye(n),-np.eye(n), np.diag(theta), -np.diag(theta)), axis = 1)
@@ -15,9 +14,7 @@ def project(y, A):
 
     res = op.linprog(c, A_eq = A_eq, b_eq = b_eq, method='revised simplex')
 
-    x = res.x
-    x = x[0:n]
-    return x
+    return  res.x[0:n]
 
 # Data
 n = 20
